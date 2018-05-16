@@ -1,0 +1,57 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.sergeome'
+//version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+// Task for building the zip file for upload
+task buildZip(type: Zip) {
+    // Using the Zip API from gradle to build a zip file of all the dependencies
+    //
+    // The path to this zip file can be set in the serverless.yml file for the
+    // package/artifact setting for deployment to the S3 bucket
+    //
+    // Link: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Zip.html
+
+    // set the base name of the zip file
+    baseName = "springBootServerless"
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+build.dependsOn buildZip
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.7'
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('com.amazonaws.serverless:aws-serverless-java-container-spring:1.1')
+    compile('io.symphonia:lambda-logging:1.0.1')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
