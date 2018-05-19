@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: serverless-java
+service: spring-boot-serverless
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -51,11 +51,12 @@ package:
 
 functions:
   springBootServerless:
-    handler: com.sergeome.springBootServerless.StreamLambdaHandler::handleRequest
+    handler: springBootServerless.StreamLambdaHandler::handleRequest
     events:
       - http:
           path: /
           method: get
+    timeout: 30 # optional, in seconds, default is 6
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

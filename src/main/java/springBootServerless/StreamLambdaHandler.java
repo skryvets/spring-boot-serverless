@@ -1,4 +1,4 @@
-package com.sergeome.springBootServerless;
+package springBootServerless;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +13,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 
 public class StreamLambdaHandler implements RequestStreamHandler {
     private static SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
+
     static {
         try {
             handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(SpringBootServerlessApplication.class);

@@ -1,4 +1,4 @@
-package com.sergeome.springBootServerless;
+package springBootServerless;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
